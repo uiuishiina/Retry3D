@@ -4,7 +4,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance ,HINSTANCE, LPSTR, int) {
 	
-	DEBUG_INITIALIZE(std::make_shared<DebugWindowLogger>());
+	DEBUG_INITIALIZE(std::make_shared<DebugWindowLogger>(LogStruct::ContextVisibility::Error));
 	DEBUG_LOG(Level::Info, "aaa");
 	return 0;
 }

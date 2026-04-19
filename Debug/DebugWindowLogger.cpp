@@ -16,7 +16,7 @@ void DebugWindowLogger::OutPut(const LogStruct::LogMessage& log) {
 	const auto level_str = LogStruct::LevelToString(level);
 	oss << "[ " << level_str << " ]" << message;
 
-	if (LogStruct::Level::Error == level) {
+	if (LogStruct::HasVisibilityFlag(ContextFlags_, LogStruct::LevelToVisibility(level))) {
 		if (context.HasValue()) {
 			oss << "\n" << "[ " << context.function_ << " ]" << "[ " << context.file_ << " ]" << "[ " << context.line_ << " ]";
 		}

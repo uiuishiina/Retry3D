@@ -4,7 +4,9 @@
 class DebugWindowLogger final : public LoggerBase
 {
 public:
-	DebugWindowLogger() = default;
+	explicit DebugWindowLogger(LogStruct::ContextVisibility flags = LogStruct::ContextVisibility::None) :
+		LoggerBase(flags) {	//継承かつBaseのコンストラクタを作っているため呼び出す必要がある
+	};
 	~DebugWindowLogger() = default;
 
 	/*
@@ -15,7 +17,7 @@ public:
 
 	/*
 	 * @brief	ログ改行派生関数
-	 * @param	BreakLengh	改行する段落数
+	 * @param	BreakLength	改行する段落数
 	 */
 	void LineBreak(const size_t BreakLength)override;
 };

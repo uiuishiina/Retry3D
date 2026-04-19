@@ -10,7 +10,7 @@ namespace LogStruct
 		Error,
 	};
 
-	//@brief	===  ログレベル変換関数  ===
+	//@brief	===  ログレベル文字列変換関数  ===
 	inline constexpr std::string_view LevelToString(Level level)noexcept {
 		switch (level)
 		{
@@ -41,7 +41,48 @@ namespace LogStruct
 			return line_ >= 0;
 		}
 	};
-	
+
+	//@brief	ログ詳細表示ビットフラグ
+	enum class ContextVisibility : uint8_t {
+		None = 0,
+		Info = 1 << 0,
+		Warning = 1 << 1,
+		Error = 1 << 2,
+		All = Info | Warning | Error
+	};
+
+	/*
+	 * @brief	===  ログ詳細表示ビットフラグ追加演算子  ===
+	 * @param	lhs 左辺
+	 * @param	rhs 右辺
+	 */
+	constexpr ContextVisibility operator|(ContextVisibility lhs, ContextVisibility rhs) {
+		//bitをかけ合わせて[0]のところに[1]が入ると[1]になる
+		return static_cast<ContextVisibility>(static_cast<uint8_t>(lhs) | static_cast<uint8_t>(rhs));
+	}
+
+	/*
+	 * @brief	===  ログレベルビットフラグ変換関数  ===
+	 * @param	level	ログレベル
+	 */
+	constexpr ContextVisibility LevelToVisibility(Level level) noexcept {
+		switch (level) {
+		case Level::Info:    return ContextVisibility::Info;
+		case Level::Warning: return ContextVisibility::Warning;
+		case Level::Error:   return ContextVisibility::Error;
+		}
+		return ContextVisibility::None;
+	}
+
+	/*
+	 * @brief	ログ詳細表示ビットフラグ判定関数
+	 * @param	flags	表示設定フラグ
+	 * @param	flag	所持確認対象フラグ
+	 */
+	constexpr bool HasVisibilityFlag(ContextVisibility flags, ContextVisibility flag) {
+
+		return (static_cast<uint8_t>(flags) & static_cast<uint8_t>(flag)) != 0;
+	}
 
 	/*
 	 * @brief	ログメッセージ構造体

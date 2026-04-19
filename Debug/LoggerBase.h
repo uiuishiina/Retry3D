@@ -4,8 +4,11 @@
 //@brief	Logo—ÍŠî’êƒNƒ‰ƒX
 class LoggerBase
 {
+protected:
+	LogStruct::ContextVisibility ContextFlags_ = LogStruct::ContextVisibility::None;
 public:
-	LoggerBase() = default;
+	explicit LoggerBase(LogStruct::ContextVisibility flags = LogStruct::ContextVisibility::None) :
+		ContextFlags_(flags) {};
 	virtual ~LoggerBase() = default;
 
 	/*
