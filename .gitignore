@@ -39,3 +39,12 @@
 
 # debug information files
 *.dwo
+*.ipch
+*.db
+*.recipe
+*.log
+*.idb
+*.tlog
+*.json
+*.vsidx
+*.suo
